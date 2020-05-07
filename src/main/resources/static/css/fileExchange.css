@@ -1,0 +1,324 @@
+@charset"utf-8";
+/*
+@名称: fileExchange.css
+@功能: 主体内容样式，不包含header、footer样式
+@使用方法: 全站第二个css文件引入
+*/
+/*左侧树*/
+.asideLeft .treeHead{
+	background: url(../images/menu_bgs.png) repeat-x 0 0;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	border-bottom:1px solid #ccc;
+}
+.asideLeft .tree li{
+	background: url(../images/asideLeftLiBg.jpg) repeat-x 0 0;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	border-bottom:1px solid #ccc;
+	border-top:1px solid #fff;
+	text-shadow: 2px 2px 3px #fff; 
+}
+/*当前位置*/
+.breadcrumb{
+	background: url(../images/menu_bgs.png) repeat-x 0 0;
+	height: 35px;
+	line-height: 35px;
+	border-bottom: 1px solid #ccc;
+	margin-bottom:10px;
+}
+.breadcrumb p{
+	background: url(../images/icons.gif) no-repeat 6px 5px;
+	padding-left:40px;
+}
+.breadcrumb a, 
+.breadcrumb span {
+	margin: 0 5px;
+	color: #666;
+}
+.breadcrumb a:hover{
+	color: #333;
+	text-decoration:underline;
+}
+/*操作按钮*/
+.contentRight{
+	position:relative;
+}
+.contentRight .ctrls-btn{
+	position:absolute;
+	right:10px;
+	top:4px;
+}
+.contentRight .ctrls-btn a,
+.contentRight .ctrls-btn .btn{
+	margin:0 10px;
+}
+
+/*大标题h1*/
+.contentRight h1{
+	height: 32px;
+	line-height: 32px;
+	/*background: url(../images/contentRh1-bg.png) repeat-x 0 -47px;*/
+	background: url(../images/contentRh1-bg.png) repeat-x 0 0;
+	border:1px solid #065e9d;
+	border-radius:5px 5px 0 0;
+	margin:15px;
+	color:#fff;
+	-webkit-box-shadow: 0 1px 2px 0 #065f96;
+	-moz-box-shadow: 0 1px 2px 0 #065f96;
+	box-shadow: 0 1px 2px 0 #065f96;	
+}
+.contentRight h1 span{
+	font-size: 14px;
+	font-weight: bold;
+	padding:0 20px;
+}
+.contentRight h5{
+	height: 50px;
+	line-height: 50px;
+	border-bottom:1px solid #dde1e8;	
+	color:#333;
+	font-size:14px;
+	font-weight:700;
+	background: url(../images/icons.gif) no-repeat 10px -157px #e6f0ff;
+	margin-bottom: 15px;
+	text-shadow: 2px 2px 3px #ccc;
+	position:relative;
+}
+.contentRight h5 span,
+.contentRight h5 a{
+	margin-left: 50px;
+}
+h5 .h5-btns{
+	position:absolute;
+	right:10px;
+	top:50%;
+	margin-top:-14px;
+}
+h5 .h5-btns input,
+h5 .h5-btns a{
+	margin:0 10px;
+}
+/*table*/
+.block-item{
+	margin:15px;
+}
+.block-item table{
+	width:100%;
+}
+.block-item table td{
+	border: 1px solid #ccc;
+	padding:5px;
+	text-align:left;
+	word-wrap:break-word;
+	word-break:break-all; 
+}
+.block-item table th{
+	border: 1px solid #ccc;
+	font-weight:bold;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	overflow:hidden;
+}
+
+/*最近消息*/
+.asideLeft .new-message{
+	background-color: #fff;
+	padding: 15px;
+	margin: 0;
+	min-height: 300px;
+}
+.new-message h5{
+	border-bottom:1px solid #dde1e8;
+	padding:5px 0;
+	margin-bottom:5px;
+	font-size:16px;
+	color:#052447;
+	background: url(../images/laba.gif) no-repeat left center;
+	padding-left:23px;
+}
+.new-message ul{
+}
+.new-message li{
+	padding:5px;
+	border-bottom:1px dotted #dde1e8;
+}
+.new-message li p{
+	padding:5px 0;
+}
+.new-message .message-state{
+	color:#999;
+	font-family: Verdana, Arial, Geneva, sans-serif,"宋体";	
+}
+.new-message .message-state span{
+	margin-right:10px;
+}
+.new-message .message-title{
+	position:relative;
+	font-size: 14px;
+	overflow: hidden;
+	white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+     -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+}
+.new-message .message-title,
+.new-message .message-title a{
+	color:#ff7000;
+}
+.new-message .message-title a:hover{
+	text-decoration:underline;
+}
+.new-message .message-time{
+	color:#ccc;
+	font-size:10px;
+	font-family: Verdana, Arial, Geneva, sans-serif,"宋体";
+}
+/*最近消息 end*/
+/*个人url列表*/
+.add-file-url{
+	width:35%;
+}
+.look-file-url{
+	width:64%;
+}
+/*导出*/
+/*.showurlcontent{
+	width:44%;
+}
+.showfilecontent{
+	width:55%;
+}*/
+.missioncontent{
+	width:100%;
+}
+/*提示tip*/
+.tip,
+.tip span{
+	color: red;
+	margin: 0 3px;
+}
+/*日志详细页 table宽度很长时*/
+.long-table{
+  overflow:auto;
+}
+.long-table table{
+  width:200%;
+}
+/*弹出层*/
+.layGray{
+	background-color: #999;
+	opacity: 0.5;
+	display:none;
+	position:fixed;
+	_position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:100;
+}
+.showlog {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius:5px;
+	margin-top:0;
+	display:none;
+	overflow:hidden;
+	
+	position:fixed;
+	_position:absolute;
+	left:50%;
+	z-index:101;
+}
+.showlog h5{
+	height:30px;
+	line-height:30px;
+	color:#666;
+	font-size:14px;
+	font-weight: bold;
+	overflow:hidden;
+	padding:0 20px;
+	background-color: #f5f5f5;
+	background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: linear-gradient(top, #ffffff, #e6e6e6);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+}
+.showlog  table{
+	margin:10px 20px;
+}
+.showlog td,
+.showlog th{
+	padding:10px;
+}
+/*弹出层 end*/
+
+.contentRight h5 .ctrls-btn {
+	top: 12px;
+	font-weight:normal;
+}
+
+
+.export-tab{}
+.export-tab-head{
+	height:30px;
+}
+.export-tab-head li{
+	float:left;
+	margin-right:10px;
+	border:1px solid #ccc;
+	background-color:#eee;
+}
+.export-tab-head li.hover{
+	background-color:#fff;
+	border-bottom:1px solid #fff;
+}
+.export-tab-head li span{padding:5px 10px;cursor:pointer;line-height:29px;font-weight:bold;}
+.export-tab #conent{
+	border:1px solid #ccc;
+	padding:10px;
+}
+
+.block-item table .td-options,
+.block-item table .td-check,
+.block-item table .td-Num{
+	text-align:center;
+}
+
+.block-item table .td-check{
+	width:50px;
+}
+.trac-detail{
+	border:1px solid #ccc;
+	padding:10px;
+	line-height:25px;
+}
+
+#fileuploaddialog{
+	width: 500px;
+	height: 200px;
+	position: fixed;
+	top:50%;
+	left:50%;
+	z-index: 9999;
+	background-color:white;
+}
+#fileuploaddialog p{
+	margin: 10px;
+}
+
+
+
+
+/*内网url发布 2014.7.15*/
+#intraneturl{width:400px;height:20px;line-height:20px;padding:3px 5px;}
+#showinfodiv{margin-top:10px;margin-bottom:20px;}
+#visitintraneturl{padding:5px 10px;cursor:pointer;}

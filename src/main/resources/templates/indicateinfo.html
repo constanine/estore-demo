@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="./static/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="./static/css/fileExchange.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./static/js/t3js.js"></script>
+</head>
+<body>
+<!--header-->
+<div th:insert="~{header.html}"></div>
+
+<!--header end-->
+
+<!--主体-->
+<div class="container" id="midContent">
+    <div class="row clearfix">
+        <!--左-->
+        <div th:insert="~{leftmenu.html}"></div>
+
+        <!--左 end-->
+
+        <!--右-->
+        <div class="span9 fl_right contentRight">
+            <div class="breadcrumb"><p>当前位置：<a href="./authority">首页</a>&gt;<span>传输配置</span></p></div><!--面包屑-->
+            <h1><span>使用说明</span></h1>
+
+            <div class="block-item" id="content">
+                <div class="trac-detail">
+                    <ul>
+                        <li>1.1第一次登入时，会自动在内外网2个ftp服务上创建以你登入ID为名字的文件夹，并在此文件夹下创建to-内网/外网,from-内网/外网各2个文件夹
+                        <li>1.2点击配置信息可以查看4个文件夹的作用，以及内外网2个ftp服务器地址，内网为<a th:href="@{${#request.getAttribute('indiskip')}}" target="_blank" th:text="${#request.getAttribute('indiskip')}"></a>，外网为<a th:href="@{${#request.getAttribute('outdiskip')}}" target="_blank" th:text="${#request.getAttribute('outdiskip')}"></a></li>
+                        <li>2.1.导入文件，请先在外网ftp上：&lt;<span th:text="${#request.getAttribute('o2ISourceDir')}"></span>&gt;文件夹放入所需导出的文件。在本网站左侧菜单上点击复制到内网，看到列表列出此文件夹下所有的文件列表，点击确认，将所有文件导入。</li>
+                        <li>2.2接收地址为内网ftp:&lt;<span th:text="${#request.getAttribute('o2IDestDir')}"></span>&gt;文件夹下</li>
+                        <li>3.1导出文件，请先在内网ftp：&lt;<span th:text="${#request.getAttribute('i2OSourceDir')}"></span>&gt;文件夹放入所需导出的文件，在本网站左侧菜单上点击复制到外网，点击文件列表，看到此文件下所有文件的列表，点击checkbox，选择所需要的文件进行导出。</li>
+                        <li>3.2 在点击确认后，返回首页看状态，看到首页提示状态为待扫描时，请点击触发扫描按钮，一般文件不超过3个，就会自动导出，否则可能需要审批，如状态变成自动导出，在首页点击触发文件复制按钮即可，在外网接受</li>
+                        <li>3.3 文件接收地址为外网ftp:&lt;<span th:text="${#request.getAttribute('i2ODestDir')}"></span>&gt;下</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--右 end-->
+    </div>
+</div>
+<!--主体 end-->
+
+<!--footer-->
+<div th:insert="~{footer.html}"></div>
+
+<!--footer end-->
+</body>
+</html>

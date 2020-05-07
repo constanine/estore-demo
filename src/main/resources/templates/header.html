@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    window.onload = function () {
+        setInterval("showtime()", 1000);
+    };
+
+    function showtime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth() + 1;
+        var date = now.getDate();
+        var hour = now.getHours();
+        var minute = now.getMinutes();
+        var second = now.getSeconds();
+        js$('time').innerHTML = year + "-" + month + "-" + date + "  " + hour + ":" + minute + ":" + second;
+    }
+</script>
+<div class="container" id="header">
+    <div class="row clearfix">
+        <div class="header_logo" id="header_logo">
+            <a href="./authority"></a>
+        </div>
+        <div class="header_right">
+            <p class="fff">
+                <span>当前用户：</span>
+                <label class="user_name"> <span th:text="${#session.getAttribute('userCode')}"></span></label>
+                <a id="logout" href="./logout">退出系统</a>
+            </p>
+        </div>
+        <p class="login-time">当前时间是：<span id="time"></span></p>
+    </div>
+</div>

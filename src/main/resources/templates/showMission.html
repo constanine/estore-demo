@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>show Mission</title>
+    <link href="./static/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="./static/css/fileExchange.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./static/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="./static/js/t3js.js"></script>
+    <script type="text/javascript" src="./static/js/paginationforsql.js"></script>
+</head>
+<body>
+<!--header-->
+<div th:insert="~{header.html}"></div>
+
+
+<!--header end-->
+
+<!--主体-->
+<div class="container" id="midContent">
+    <div class="row clearfix">
+
+                            <!--左-->
+        <div th:insert="~{leftmenu.html}"></div>
+
+        <!--左 end-->
+
+                            <!--右-->
+                            <div class="span9 fl_right contentRight">
+                                <div class="breadcrumb"><p>当前位置：<a href="./authority">首页</a>&gt;<span>任务详细</span></p></div><!--面包屑-->
+                                <div class="ctrls-btn" th:switch="${#request.getAttribute('showwhat')}"><a class="btn" href="./scanmission">扫描任务</a><a class="btn" href="./toexportstep2">请求执行导出第2步</a>
+                                    <a th:case="Import" class="refresh" href="./showmissiondeal?show=Import">刷新</a>
+                                    <a th:case="Export" class="refresh" href="./showmissiondeal?show=Export">刷新</a>
+                                </div>
+                                <h1><span>任务详细</span></h1>
+
+                                <div th:if="${#request.getAttribute('error') eq 'sqlerror'}"><span>sql can't be connected></span></div>
+
+                                <input  id ="pages" type="hidden" th:value="${#request.getAttribute('pages')}" />
+                                <input  id ="pagesize" type="hidden" th:value="${#request.getAttribute('pagesize')}" />
+                                <input  id ="startnum" type="hidden" th:value="${#request.getAttribute('startnum')}" />
+                                <input  id ="showmethod" type="hidden" th:value="${#request.getAttribute('showwhat')}" />
+
+                                <div class="block-item" th:if="${#request.getAttribute('showwhat') eq 'Import'}">
+                                    <h5><span>任务日志表：</span></h5>
+                                    <table>
+                                        <tr class="table-head">
+                                            <th>任务ID</th>
+                                            <th>开始时间</th>
+                                            <th>状态</th>
+                                            <th>结束时间</th>
+                                            <th>fileListLog存放路径</th>
+                                            <th>runLog存放路径</th>
+                                            <th>任务总文件数</th>
+                                            <th>任务总文件大小</th>
+                                        </tr>
+
+                                        <tr th:if="${#request.getAttribute('immissions')!=null && #request.getAttribute('immissions').size()>0}" th:each="immission:${#request.getAttribute('immissions')}">
+                                            <td th:text="${immission.missionid}"></td>
+                                            <td th:text="${immission.startTime}"></td>
+                                            <td th:text="${immission.state}"></td>
+                                            <td th:text="${immission.endTime}"></td>
+                                            <td><a th:text="${immission.filelogUrl}" target="_blank" title="显示导入任务文件列表" th:href="@{'logread?type=filelist&filename='+${immission.filelogUrl}}"></a></td>
+                                            <td><a th:text="${immission.runlogUrl}" target="_blank" title="运行日志" th:href="@{'logread?type=filelist&filename='+${immission.runlogUrl}}"></a></td>
+                                            <td th:text="${immission.sumFileNumber}"></td>
+
+                                            <td th:if="${immission.sumFileSize < 1024}" th:utext="${immission.sumFileSize}+' B'"></td>
+                                            <td th:if="${immission.sumFileSize / 1024 < 1024 &&immission.sumFileSize > 1024}" th:utext="${immission.sumFileSize / 1024+1}+' KB'"></td>
+                                            <td th:if="${immission.sumFileSize / 1024 /1024 < 1024 && immission.sumFileSize/1024 > 1024}" th:utext="${immission.sumFileSize / 1024 /1024 +1}+' MB'"></td>
+                                            <td th:if="${immission.sumFileSize / 1024 /1024/1024 < 1024 && immission.sumFileSize/1024/1024 > 1024}" th:utext="${immission.sumFileSize / 1024 /1024/1024 +1}+' GB'"></td>
+                                        </tr>
+
+                                        <tr th:if="${#request.getAttribute('immissions').size() eq 0}">
+                                            <td colspan="8">暂时没有任务数据</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+
+                                <div class="block-item" th:if="${#request.getAttribute('showwhat') eq 'Export'}">
+                                    <h5><span>任务日志表：</span></h5>
+                                    <div class="long-table">
+                                        <table>
+                                            <tr class="table-head">
+                                                <th>任务ID</th>
+                                                <th>开始时间</th>
+                                                <th>进程1</th>
+                                                <th>导出任务fileListLog存放路径</th>
+                                                <th>导出任务第一步runLog存放路径</th>
+                                                <th>任务总文件数</th>
+                                                <th>任务总文件大小</th>
+                                                <th>任务判断状态</th>
+                                                <th>导出任务第二步runLog存放路径</th>
+                                                <th>进程2</th>
+                                                <th>结束时间</th>
+                                                <th>审批状态</th>
+                                                <th>审批人</th>
+                                                <th>审批时间</th>
+                                                <th>审批日志日志存放路径</th>
+                                            </tr>
+
+                                            <tr th:if="${#request.getAttribute('exmissions')!=null && #request.getAttribute('exmissions').size()>0}" th:each="exmission:${#request.getAttribute('exmissions')}">
+                                                <td th:text="${exmission.missionid}"></td>
+                                                <td th:text="${exmission.startTime}"></td>
+                                                <td th:text="${exmission.step1state}"></td>
+                                                <td><a th:text="${exmission.exportfilelogUrl}" target="_blank" title="显示导出任务文件列表" th:href="@{'logread?type=filelist&filename='+${exmission.exportfilelogUrl}}"></a></td>
+                                                <td><a th:text="${exmission.exportstep1runlogUrl}" target="_blank" title="运行日志" th:href="@{'logread?type=filelist&filename='+${exmission.exportstep1runlogUrl}}"></a></td>
+                                                <td th:text="${exmission.sumFileNumber}"></td>
+
+                                                <td th:if="${exmission.sumfilesize < 1024}" th:utext="${exmission.sumfilesize}+' B'"></td>
+                                                <td th:if="${exmission.sumfilesize / 1024 < 1024 &&exmission.sumfilesize > 1024}" th:utext="${exmission.sumfilesize / 1024+1}+' KB'"></td>
+                                                <td th:if="${exmission.sumfilesize / 1024 /1024 < 1024 && exmission.sumfilesize/1024 > 1024}" th:utext="${exmission.sumfilesize / 1024 /1024 +1}+' MB'"></td>
+                                                <td th:if="${exmission.sumfilesize / 1024 /1024/1024 < 1024 && exmission.sumfilesize/1024/1024 > 1024}" th:utext="${exmission.sumfilesize / 1024 /1024/1024 +1}+' GB'"></td>
+
+                                                <td th:switch="${exmission.judgement}">
+                                                    <span th:case="auto_do"><span>自动导出</span></span>
+                                                    <span th:case="wait_auth"><span>待审批</span></span>
+                                                    <span th:case="ready_scan"><span>待扫描</span></span>
+                                                    <span th:case="finished"><span>完成</span></span>
+                                                </td>
+
+                                                <td><a th:text="${exmission.exportstep2runlogUrl}" target="_blank" title="第二步运行日志" th:href="@{'logread?type=filelist&filename='+${exmission.exportstep2runlogUrl}}"></a></td>
+                                                <td th:text="${exmission.step2state}"></td>
+                                                <td th:text="${exmission.endTime}"></td>
+                                                <td th:text="${exmission.authorizeState}"></td>
+                                                <td th:text="${exmission.authorizer}"></td>
+                                                <td th:text="${exmission.authorizeTime}"></td>
+                                                <td th:text="${exmission.authorityLogUrl}"></td>
+                                            </tr>
+
+                                            <tr th:if="${#request.getAttribute('exmissions').size() eq 0}">
+                                                <td colspan="15">暂时没有任务数据</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="block-item pageline">
+                                    <div id ="paginpages"></div>
+                                    <div class="pageItems">
+                                        <select id="pagesizesset" onchange="changepagesize()">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> 条/页
+                                    </div>
+                                </div>
+                            </div>
+                            <!--右 end-->
+    </div>
+
+</div>
+<!--主体 end-->
+
+<!--footer-->
+<div th:insert="~{footer.html}"></div>
+
+<!--footer end-->
+
+<!-- show js -->
+<div class="layGray"></div>
+<div id="showlog" class="showlog">
+    <h5><span>导出文件列表</span></h5>
+    <div class="p_10 m_10">
+        <a id="closebutton" href="javascript:void(0);" onclick="closeit();">X</a>
+    </div>
+    <div id="logcontent"></div>
+</div>
+<!-- show js -->
+
+<!-- onload.js -->
+<script type="text/javascript">
+    var oldonload=window.onload;
+    var showmethod = $("#showmethod").val();
+    var pagesize = $("#pagesize").val();
+    var pages = Math.floor(($("#pages").val()/pagesize)+1);
+    var target = $("#startnum").val();
+    var index =0;
+
+
+
+    window.onload=function(){
+        oldonload();
+        pages = pages>0 ? pages:1;
+        pageinit(target,pages,pagesize,"paginpages",showmethod);
+        setpage();
+        if(pagesize==10){
+            index=0;
+        }else if(pagesize==25){
+            index=1;
+        }else if(pagesize==50){
+            index=2;
+        }else if(pagesize==100){
+            index=3;
+        }
+        $("#pagesizesset").get(0).selectedIndex=index;
+    }
+
+    var select=$("#pagesizesset");
+    select.get(0).selectedInde=index;
+    function changepagesize(){
+        pagesize=select.val();
+        var pages = Math.floor(($("#pages").val()/pagesize)+1);
+        pageinit(target,pages,pagesize,"paginpages",showmethod);
+        setpage();
+    }
+</script>
+<!-- onload.js -->
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Importing...</title>
+    <link href="./static/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="./static/css/fileExchange.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./static/js/t3js.js"></script>
+</head>
+<body>
+<!--header-->
+<div th:insert="~{header.html}"></div>
+
+<!--header end-->
+
+<!--主体-->
+<div class="container" id="midContent">
+    <div class="row clearfix">
+        <!--左-->
+        <div th:insert="~{leftmenu.html}"></div>
+
+        <!--左 end-->
+
+        <!--右-->
+        <div class="span9 fl_right contentRight">
+            <div class="breadcrumb"><p>当前位置：<a href="./authority">首页</a>&gt;<span>执行结果</span></p></div><!--当前位置待处理-->
+            <div class="ctrls-btn"><a class="refresh" href="./authority">刷新</a></div>
+            <h1><span>执行结果</span></h1>
+            <div class="block-item">
+                <p>
+                    Mission:<span th:text="${#session.getAttribute('missionid')}"></span>
+
+                    <span th:if="${#request.getAttribute('misfinish') eq 'finished'}">
+                    任务完成，请至<a href="./authority">首页</a>
+                    </span>
+
+                    <span th:if="${#request.getAttribute('misfinish') eq 'stopped'}">
+                    任务已停止，请至<a href="./authority">首页</a>
+                    </span>
+
+                    <span th:if="${#request.getAttribute('misfinish') eq 'stopping'}">
+                    <a>任务停止中，等待当前文件导入完，将终止导入任务</a>
+                    </span>
+
+                    <span th:if="${#request.getAttribute('misfinish') != 'finished' && #request.getAttribute('misfinish') != 'stopped' && #request.getAttribute('misfinish') != 'stopping'}">
+                    执行中.....
+                    </span>
+                </p>
+
+                <p>复制文件列表如下:</p>
+
+                            <div id="showcontent">
+                                <table th:if="${#request.getAttribute('copyfilelist')!=null}">
+                                    <tr class="table-head">
+                                        <th>文件名</th>
+                                    </tr>
+                                    <tr th:each="file:${#request.getAttribute('copyfilelist')}">
+
+                                        <td th:text="${file}"></td>
+
+                                    </tr>
+
+
+                                </table>
+                            </div>
+
+                            <div id="showresult">
+                                <ul th:switch="${#request.getAttribute('result')!=null && #request.getAttribute('result').size()>0}">
+
+                                    <li th:case="true">当前迁移文件：<span th:text="${#request.getAttribute('result').get(0)}"></span></li>
+                                    <li th:case="true">已完成迁移文件数 ：<span th:text="${#request.getAttribute('result').get(1)}"></span></li>
+                                    <li th:case="true">已完成迁移文件字节数：<span th:text="${#request.getAttribute('result').get(2)}"></span>Bytes
+                                    </li>
+
+                                    <li>文件总数:<span th:text="${#request.getAttribute('fileNumber')}"></span>
+                                    </li>
+                                    <li>文件总大小：
+                                        <span th:if="${#session.getAttribute('sumfilesize') < 1024}"><span th:utext="${#session.getAttribute('sumfilesize')}+' B'"></span></span>
+                                        <span th:if="${#session.getAttribute('sumfilesize')/1024 < 1024 && #session.getAttribute('sumfilesize') > 1024}"><span th:utext="${#session.getAttribute('sumfilesize')/1024}+' KB'"></span></span>
+                                        <span th:if="${#session.getAttribute('sumfilesize')/1024/1024 < 1024 && #session.getAttribute('sumfilesize')/1024 > 1024}"><span th:utext="${#session.getAttribute('sumfilesize')/1024/1024}+' MB'"></span></span>
+                                        <span th:if="${#session.getAttribute('sumfilesize')/1024/1024/1024 < 1024 && #session.getAttribute('sumfilesize')/1024/1024 > 1024}"><span th:utext="${#session.getAttribute('sumfilesize')/1024/1024/1024}+' GB'"></span></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="mt_20 mb_20">
+                                <span><a class="btn" href="./checkmissionprogress">刷新状态</a></span>
+                                <span><a class="btn" href="./stopcurrentmission">停止当前任务</a></span>
+                            </p>
+            </div>
+        </div>
+        <!--右 end-->
+    </div>
+</div>
+<!--主体 end-->
+
+<!--footer-->
+<div th:insert="~{footer.html}"></div>
+
+<!--footer end-->
+</body>
+</html>

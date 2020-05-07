@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+    <link href="./static/css/login.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="login-container">
+    <div class="login-box">
+        <h1>FileExchange系统登录</h1>
+        <div class="line"></div>
+        <form action="./dologin" method="post">
+            <p class="user-name"><input class="txt" type="text" name="userCode" /></p>
+            <p class="pwd"><input class="txt" type="password" name="password" /></p>
+            <p class="tip">
+                <td th:if="${#request.getAttribute('error') eq 'usererror'}">
+                    <span>user is not exist</span>
+                </td>
+            </p>
+            <p class="login-btn"><input class="btn btn-primary btn-large" type="submit" value="登入"></p>
+        </form>
+        <p>注：请使用内网svn账号</p>
+    </div>
+</div>
+</body>
+</html>

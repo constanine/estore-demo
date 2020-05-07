@@ -1,0 +1,946 @@
+@charset"utf-8";
+/*
+@名称: reset
+@功能: 重设浏览器默认样式
+@使用方法: 在网页中作为第一个样式文件引入即可，
+*/
+/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
+html{
+	color:#000;background:#fff;
+	-webkit-text-size-adjust:100%;
+	-ms-text-size-adjust:100%;
+}
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,a,span,i{
+	margin: 0;
+    padding: 0;
+}
+
+/* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{
+	display:block;
+}
+
+/* HTML5 媒体文件跟 img 保持一致 */
+audio,canvas,video{
+	display:inline-block;
+    *display:inline;
+    *zoom:1;
+}
+
+/* 要注意表单元素并不继承父级 font 的问题 */
+body,button,input,select,textarea{
+	font:12px/1.5 tahoma,arial,\5b8b\4f53;
+}
+select,textarea,input[type="text"]{
+	vertical-align: middle;
+	font-size: inherit;
+	color: inherit;
+}
+textarea{
+	resize:none;
+}
+
+/* 去掉各Table cell 的边距并让其边重合 */
+table{
+	border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* IE bug fixed: th 不继承 text-align*/
+th{
+	text-align:inherit;
+}
+
+/* 去除默认边框 */
+fieldset,img{
+	border:0;
+}
+/* ie6 7 8(q) bug 显示为行内表现 */
+iframe{
+	display:block;
+    border: none;
+}
+
+/* 去掉 firefox 下此元素的边框 */
+abbr,acronym{
+	border:0;font-variant:normal;
+}
+
+/* 一致的 del 样式 */
+del{
+	text-decoration:line-through;
+}
+
+address,caption,cite,code,dfn,em,th,var{
+	font-style:normal;
+	font-weight:500;
+}
+
+/* 去掉列表前的标识, li 会继承 */
+ol,ul,li{
+	list-style:none;
+}
+
+/* 对齐是排版最重要的因素, 别让什么都居中 */
+caption,th{
+	text-align:left;
+}
+
+/* 来自yahoo, 让标题都自定义, 适应多个系统应用 */
+h1,h2,h3,h4,h5,h6{
+	font-weight:500;
+}
+
+q:before,q:after{
+	content:'';
+}
+
+/* 统一上标和下标 */
+sub,sup{
+	font-size:75%;
+    line-height:0;
+    position:relative;
+    vertical-align:baseline;
+}
+sup{top:-0.5em;}
+sub{bottom:-0.25em;}
+
+/* 默认不显示下划线，保持页面简洁 */
+a,a:link,a:visited {
+	text-decoration: none;
+	cursor: pointer;
+	outline: none;
+}
+/* 让链接在 hover 状态下显示下划线 */
+/*a:hover{*/
+	/*text-decoration:underline;*/
+/*}*/
+
+
+
+
+/*
+@名称: public
+@功能: 常用自定义样式
+@使用方法：在有需求的标签上加上对应的className即可：（可继reset.css之后的第二个文件引入）
+*/
+
+/*-----------------------------------------常用自定义样式----------------------------------------------*/
+/* 清理浮动 */
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after{
+	content: "\20";
+	display: block;
+	height: 0;
+	font-size:0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix,.row{
+	*zoom:1;/* for IE6 IE7 */
+	position:relative;	
+}
+
+/* 隐藏, 通常用来与 JS 配合 */
+.display {
+	display: block;
+}
+.hidden {
+	display: none;
+}
+
+/* 设置内联, 减少浮动带来的bug */
+.fl_left {
+	float: left;
+}
+.fl_right {
+	float: right;
+}
+.fl_left,.fl_right{
+	_display:inline;
+	display:block;
+}
+.fl_none {
+	float: none;
+}
+
+/*字体大小*/
+.f10{
+	font-size:10px;
+}
+.f11{
+	font-size:11px;
+}
+.f12 {
+	font-size: 12px;
+}
+.f14 {
+	font-size: 14px;
+}
+.f16 {
+	font-size: 16px;
+}
+.f18{
+	font-size:18px;
+}
+.f24{
+	font-size:24px;
+}
+.fbold {
+	font-weight: bold;
+}
+.fnormal {
+	font-weight: normal;
+}
+
+/*字体*/
+.fontyh {
+	font-family: "Microsoft Yahei", "微软雅黑","宋体", Verdana, Arial, Geneva, sans-serif;
+}
+.fontst {
+	font-family: "宋体", Arial,Verdana, Geneva, sans-serif;
+}
+.fontver {
+	font-family: Verdana, Arial, Geneva, sans-serif,"宋体";
+}
+.farial{
+	font-family:Arial;
+}
+
+/*字体颜色*/
+.fff {
+	color: #fff;
+}
+.fff a:link,.fff a:visited {
+	color: #fff;
+}
+.fff a:hover {
+	color: #fff;
+	text-decoration: underline
+}
+a.fff:link,a.fff:visited {
+	color: #fff;
+}
+a.fff:hover {
+	color: #fff;
+	text-decoration: underline
+}
+.f333 {
+	color: #333;
+}
+.f333 a:link,.f333 a:visited {
+	color: #333;
+}
+.f333 a:hover {
+	color: #039;
+	text-decoration: underline
+}
+a.f333:link,a.f333:visited {
+	color: #333;
+}
+a.f333:hover {
+	color: #039;
+	text-decoration: underline
+}
+.f666 {
+	color: #666;
+}
+.f666 a:link,.f666 a:visited {
+	color: #666;
+}
+.f666 a:hover {
+	color: #333;
+	text-decoration: underline
+}
+a.f666:link,a.f666:visited {
+	color: #666;
+}
+a.f666:hover {
+	color: #333;
+	text-decoration: underline
+}
+.f999 {
+	color: #999;
+}
+.f999 a:link,.f999 a:visited {
+	color: #999;
+}
+.f999 a:hover {
+	color: #666;
+	text-decoration: underline
+}
+a.f999:link,a.f999:visited {
+	color: #999;
+}
+a.f999:hover {
+	color: #666;
+	text-decoration: underline
+}
+.f036 {
+	color: #036;
+}
+.f036 a:link,.f036 a:visited {
+	color: #036;
+}
+.f036 a:hover {
+	color: #f30;
+	text-decoration: underline
+}
+a.f036:link,a.f036:visited {
+	color: #036;
+}
+a.f036:hover {
+	color: #f30;
+	text-decoration: underline
+}
+.f039 {
+	color: #039;
+}
+.f039 a:link,.f039 a:visited {
+	color: #039;
+}
+.f039 a:hover {
+	color: #f30;
+	text-decoration: underline
+}
+a.f039:link,a.f039:visited {
+	color: #039;
+}
+a.f039:hover {
+	color: #f30;
+	text-decoration: underline
+}
+
+/*外边距*/
+.m_auto{
+    margin: 0 auto;
+}
+.m_5 {
+	margin: 5px;
+}
+.mt_5 {
+	margin-top: 5px;
+}
+.mr_5 {
+	margin-right: 5px;
+}
+.mb_5 {
+	margin-bottom: 5px;
+}
+.ml_5 {
+	margin-left: 5px;
+}
+.m_10 {
+	margin: 10px;
+}
+.mt_10 {
+	margin-top: 10px;
+}
+.mr_10 {
+	margin-right: 10px;
+}
+.mb_10 {
+	margin-bottom: 10px;
+}
+.ml_10 {
+	margin-left: 10px;
+}
+.m_15 {
+	margin: 15px;
+}
+.mt_15 {
+	margin-top: 15px;
+}
+.mr_15 {
+	margin-right: 15px;
+}
+.mb_15 {
+	margin-bottom: 15px;
+}
+.ml_15 {
+	margin-left: 15px;
+}
+.m_20 {
+	margin: 20px;
+}
+.mt_20 {
+	margin-top: 20px;
+}
+.mr_20 {
+	margin-right: 20px;
+}
+.mb_20 {
+	margin-bottom: 20px;
+}
+.ml_20 {
+	margin-left: 20px;
+}
+.m_30 {
+	margin: 30px;
+}
+.mt_30 {
+	margin-top: 30px;
+}
+.mr_30 {
+	margin-right: 30px;
+}
+.mb_30 {
+	margin-bottom: 30px;
+}
+.ml_30 {
+	margin-left: 30px;
+}
+.m_40 {
+	margin: 40px;
+}
+.mt_40 {
+	margin-top: 40px;
+}
+.mr_40 {
+	margin-right: 40px;
+}
+.mb_40 {
+	margin-bottom: 40px;
+}
+.ml_40 {
+	margin-left: 40px;
+}
+
+.m_50 {
+	margin: 50px;
+}
+.mt_50 {
+	margin-top: 50px;
+}
+.mr_50 {
+	margin-right: 50px;
+}
+.mb_50 {
+	margin-bottom: 50px;
+}
+.ml_50 {
+	margin-left: 50px;
+}
+
+/*内边距*/
+.p_5 {
+	padding: 5px;
+}
+.pt_5 {
+	padding-top: 5px;
+}
+.pr_5 {
+	padding-right: 5px;
+}
+.pb_5 {
+	padding-bottom: 5px;
+}
+.pl_5 {
+	padding-left: 5px;
+}
+
+.p_10 {
+	padding: 10px;
+}
+.pt_10 {
+	padding-top: 10px;
+}
+.pr_10 {
+	padding-right: 10px;
+}
+.pb_10 {
+	padding-bottom: 10px;
+}
+.pl_10 {
+	padding-left: 10px;
+}
+.p_15 {
+	padding: 15px;
+}
+.pt_15 {
+	padding-top: 15px;
+}
+.pr_15 {
+	padding-right: 15px;
+}
+.pb_15 {
+	padding-bottom: 15px;
+}
+.pl_15 {
+	padding-left: 15px;
+}
+.p_20 {
+	padding: 20px;
+}
+.pt_20 {
+	padding-top: 20px;
+}
+.pr_20 {
+	padding-right: 20px;
+}
+.pb_20 {
+	padding-bottom: 20px;
+}
+.pl_20 {
+	padding-left: 20px;
+}
+.p_30 {
+	padding: 30px;
+}
+.pt_30 {
+	padding-top: 30px;
+}
+.pr_30 {
+	padding-right: 30px;
+}
+.pb_30 {
+	padding-bottom: 30px;
+}
+.pl_30 {
+	padding-left: 30px;
+}
+
+/*文本对齐方式*/
+.txt_left {
+	text-align: left;
+}
+.txt_right {
+	text-align: right;
+}
+.txt_center {
+	text-align: center;
+}
+.line_height20{
+    line-height: 20px;
+}
+.line_height25{
+    line-height: 25px;
+}
+.line_height30{
+    line-height: 30px;
+}
+/*文本段落首行缩进*/
+.txt_indent {
+	text-indent:2em;
+}
+
+/*超出部分截掉或出现滚动条*/
+.oflow_auto {
+	overflow: auto;
+}
+.oflow_hidden {
+	overflow: hidden;
+}
+/*截断字符并以省略号显示*/
+.oflow_hidden_jie {
+	overflow: hidden;
+	white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+     -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+}
+/*相对绝对定位*/
+.p_relative{
+    position: relative;
+}
+.p_absolute{
+    position: absolute;
+}
+
+/*二维列表table_list,每个tr中的td的width加起来之和<=100%，超出宽度自动换行*/
+.table_list td{
+	overflow:hidden;
+}
+.table_list td span,
+.table_list td a{
+	line-height:22px;
+}
+.tdwidth10{ width:10%;}
+.tdwidth20{ width:20%;}
+.tdwidth30{ width:30%;}
+.tdwidth40{ width:40%;}
+.tdwidth50{ width:50%;}
+.tdwidth60{ width:60%;}
+.tdwidth70{ width:70%;}
+.tdwidth80{ width:80%;}
+.tdwidth90{ width:90%;}
+.tdwidth100{ width:100%;}
+
+.tdwidth5 { width:5%;}
+.tdwidth8 { width:8%;}
+.tdwidth12{ width:12%;}
+.tdwidth15{ width:15%;}
+.tdwidth25{ width:25%;}
+.tdwidth35{ width:35%;}
+.tdwidth45{ width:45%;}
+.tdwidth55{ width:55%;}
+.tdwidth65{ width:65%;}
+.tdwidth75{ width:75%;}
+.tdwidth85{ width:85%;}
+.tdwidth95{ width:95%;}
+
+.p_dot p,/*段落或列表前有点时*/
+.p_dot li,
+p.p_dot,
+li.p_dot{
+    background: url(../images/dot.png) no-repeat 0 9px transparent;
+    padding-left: 15px;
+}
+.no_p_dot p,
+p.no_p_dot,
+.no_p_dot li,
+li.no_p_dot{/*段落前无点时*/
+    background:none;
+    padding-left: 15px;
+}
+.p_indent p,/*段落首行缩进时*/
+p.p_indent{
+	text-indent:2em;
+}
+
+.hr{
+	height:1px;
+	width:100%;
+	background-color:#ccc;
+	font-size:0;
+	line-height:0;
+}
+/*-----------------------------------------常用自定义样式 end----------------------------------------------*/
+
+
+
+/*-----------------------------------------项目模块化 公共样式 start----------------------------------------------*/
+/*模块化*/
+.delivery{
+	_zoom:1;
+	_position:relative;
+}
+.delivery .block{
+	_zoom:1;	
+}
+.delivery .block .content{
+	line-height:22px;
+	font-size:12px;
+	color:#666;
+	text-align:left;
+}
+/*模块化*/
+.tabberlive .tabbertabhide {
+	display:none;
+}
+/*-----------------------------------------项目模块化 公共样式 start----------------------------------------------*/
+
+[class*="span"] {         /*此句不兼容ie6*/
+    float: left;
+}
+.span2,.span3,.span4,.span5,.span6,.span9{   /*只对ie6*/
+    _float: left;
+}
+.span12{
+    float: none;
+}
+.span4{
+	width:33%;
+}
+body {
+	background-color: #dbdee3;
+    color: #666;
+    font-family: "宋体", Arial,Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+}
+.container{
+	margin:5px;
+	margin-top:0;
+	text-align: left;
+	position: relative;
+	z-index:0;
+}
+/*------------------------项目公用样式(即全站公用header、nav、footer/bottom、breadcrumb面包屑、toolbar操作按钮、page翻页、data-list数据列表、抽屉树、过滤条件 等)-----------------------*/
+/*header*/
+#header{
+    /*
+	height: 130px;
+	background:url(../images/header-bg.jpg) repeat-x #023e7d 0 -170px;
+	*/
+	height: 144px;
+	background:url(../images/header-bg.jpg) repeat-x #023e7d 0 0;	
+	border-bottom:4px solid #052447;
+	margin:0;
+	margin-bottom:5px;
+	color:#fff;
+}
+#header .row{
+    height: 144px;
+	background:url(../images/body_light.png) no-repeat 105px top;
+	_background:none;
+}
+.header_logo{
+    height: 78px;
+    width: 345px;
+	position:absolute;
+	left:10px;
+	top:25px;	
+}
+.header_logo a{
+	display:block;
+	width:100%;
+	height:100%;
+	background:url(../images/logo.png) no-repeat;
+	_background:url(../images/logo.gif) no-repeat;
+	
+}
+.header_right{
+    height: 30px;
+	line-height:30px;
+	position:absolute;
+	right:20px;
+	top:10px;
+	font-size:14px;
+	text-shadow: 2px 2px 3px #333333; 	
+	background:url(../images/head-to-right.png) no-repeat left center;
+	_background:none;
+	padding-left:75px;
+}
+.header_right a{
+	padding:6px 20px;
+	margin:0 5px;
+	background-color:#0b4486;
+	font-size:12px;
+	*zoom:1;
+}
+.header_right .user_name{
+	margin-right:20px;
+}
+.login-time{
+	position:absolute;
+	right:25px;
+	bottom:5px;
+	font-family: "Microsoft Yahei", "微软雅黑","宋体", Verdana, Arial, Geneva, sans-serif;
+	color:#ddd;
+	background:url(../images/timers.png) no-repeat 0 2px;
+	_background:none;
+	padding-left:22px;
+}
+.login-time span{
+	margin-left:5px;
+	font-family: Verdana, Arial, Geneva, sans-serif,"宋体";
+}
+/*header end*/
+.asideLeft{
+	width:20%;
+	background-color: #f3f3f3;
+	border-right: 1px solid #ccc;	
+}
+.contentRight{
+	width: 79.5%;
+	background-color: #fff;	
+	float:right;
+}
+#footer{
+	background-color: #eee;
+	padding:10px 0;
+	text-align:center;
+	margin:0;
+}
+
+
+h1,h2,h3,h4,h5,h6{
+	font-family: "Microsoft Yahei","微软雅黑","宋体",Verdana,Arial,Geneva,sans-serif;
+}
+h1{
+	font-size:20px;
+}
+h2{
+	font-size:16px;
+}
+h3,h4,h5,h6{
+	font-size:14px;
+}
+input[type="text"]{
+	border:1px solid #ccc;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;	
+}
+
+/*button*/
+/*默认按钮*/
+.btn {
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+  *zoom: 1;
+  padding: 4px 10px 4px;
+  margin-bottom: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: #333333;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  vertical-align: middle;
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(top, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+  border: 1px solid #cccccc;
+  border-bottom-color: #b3b3b3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  *margin-left: .3em;
+}
+.btn:hover,
+.btn:active,
+.btn.active,
+.btn.disabled,
+.btn[disabled] {
+  background-color: #e6e6e6;
+}
+.btn:active,
+.btn.active {
+  background-color: #cccccc \9;
+}
+.btn:first-child {
+  *margin-left: 0;
+}
+.btn:hover {
+  color: #333333;
+  text-decoration: none;
+  background-color: #e6e6e6;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -ms-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+}
+.btn:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.btn.active,
+.btn:active {
+  background-image: none;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #e6e6e6;
+  background-color: #d9d9d9 \9;
+  outline: 0;
+}
+/*深蓝色按钮*/
+.btn-primary {
+background-color: #0074CC;
+background-image: -moz-linear-gradient(top, #08C, #05C);
+background-image: -ms-linear-gradient(top, #08C, #05C);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08C), to(#05C));
+background-image: -webkit-linear-gradient(top, #08C, #05C);
+background-image: -o-linear-gradient(top, #08C, #05C);
+background-image: linear-gradient(top, #08C, #05C);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088cc', endColorstr='#0055cc', GradientType=0);
+border-color: #05C #05C #003580;
+*border-color: #0074CC;
+filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  background-color: #0055cc;
+}
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #004099 \9;
+}
+.btn-primary,
+.btn-primary:hover {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+}
+.btn-primary.active {
+  color: rgba(255, 255, 255, 0.75);
+}
+/*按钮不可用*/
+.btn.disabled, .btn[disabled] {
+cursor: default;
+background-image: none;
+background-color: #E6E6E6;
+opacity: 0.65;
+filter: alpha(opacity=65);
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
+color:#666;
+border:1px solid #ccc;
+}
+/*按钮加大*/
+.btn-large {
+padding: 9px 14px;
+font-size: 15px;
+line-height: normal;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+/*button end*/
+/*table-head-bg*/
+.table-head{
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(top, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+}
+.table-head td,
+.table-head th{
+	text-align:center;
+}
+
+/*列表翻页*/
+.pageline{
+	margin:5px 0;
+	position:relative;
+}
+.pageline a,
+.pageline .current{
+	margin:0 5px;
+	padding:5px;
+}
+.pageline a:hover{
+	background-color:#e6f0ff;
+}
+.pageline .pageItems{
+	position:absolute;
+	right:10px;
+	top:0;
+}
+/*------------------------项目公用样式(即全站公用header、nav、footer/bottom、breadcrumb面包屑、toolbar操作按钮、page翻页、data-list数据列表、抽屉树、过滤条件 等 end)-----------------------*/
+
+
+

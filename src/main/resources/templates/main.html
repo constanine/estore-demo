@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Index page</title>
+    <link href="./static/introjs/introjs.css" rel="stylesheet" type="text/css"/>
+    <link href="./static/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="./static/css/fileExchange.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="./static/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="./static/js/t3js.js"></script>
+</head>
+<body>
+<!--header-->
+<div th:insert="~{header.html}"></div>
+<!--header end-->
+
+<!--主体-->
+<div class="container" id="midContent">
+    <div class="row clearfix">
+        <!--左-->
+        <div th:insert="~{leftmenu.html}"></div>
+        <!--左 end-->
+
+        <!--右-->
+        <div class="span9 fl_right contentRight">
+            <div class="breadcrumb"><p>当前位置：<span>首页</span></p></div><!--面包屑-->
+            <div class="ctrls-btn"><input type="button" class="btn" id='introbtn' value="使用引导"/><a class="btn refresh"
+                                                                                                   href="./authority">刷新</a>
+            </div>
+            <h1><span>首页</span></h1>
+
+            <!--导入-->
+            <div class="block-item" id="importcontent">
+                <h5><span>导入日志表:</span></h5>
+                <table>
+                    <tr class="table-head">
+                        <th>任务ID</th>
+                        <th>开始时间</th>
+                        <th>状态</th>
+                        <th>结束时间</th>
+                        <th>任务总文件数</th>
+                        <th>任务总文件大小</th>
+                    </tr>
+
+                    <tr th:if="${#request.getAttribute('immissions')!=null && #request.getAttribute('immissions').size()>0}" th:each="immission : ${#request.getAttribute('immissions')}">
+                        <td th:text="${immission.missionid}"></td>
+                        <td th:text="${immission.startTime}"></td>
+                        <td th:text="${immission.state}"></td>
+                        <td th:text="${immission.endTime}"></td>
+                        <td th:text="${immission.sumFileNumber}"></td>
+
+                        <td th:if="${immission.sumFileSize < 1024}" th:utext="${immission.sumFileSize}+' B'"></td>
+                        <td th:if="${immission.sumFileSize / 1024 < 1024 &&immission.sumFileSize > 1024}" th:utext="${immission.sumFileSize / 1024+1}+' KB'"></td>
+                        <td th:if="${immission.sumFileSize / 1024 /1024 < 1024 && immission.sumFileSize/1024 > 1024}" th:utext="${immission.sumFileSize / 1024 /1024 +1}+' MB'"></td>
+                        <td th:if="${immission.sumFileSize / 1024 /1024/1024 < 1024 && immission.sumFileSize/1024/1024 > 1024}" th:utext="${immission.sumFileSize / 1024 /1024/1024 +1}+' GB'"></td>
+                    </tr>
+
+                    <tr th:if="${#request.getAttribute('immissions').size() eq 0}">
+                        <td colspan="8">暂时没有任务数据</td>
+                    </tr>
+
+
+                </table>
+                <p class="txt_right mt_15"><a class="btn" href="./showmissiondeal?show=Import">进入日志详细</a></p>
+            </div>
+
+            <!--导出-->
+            <div class="block-item" id="exportcontent">
+                <h5><span>导出日志表:</span>
+                    <div class="ctrls-btn"><a class="btn" id="sacnbtn" href="./scanmission">触发任务扫描</a><a class="btn"
+                                                                                                       id="export2"
+                                                                                                       href="./toexportstep2">触发文件复制</a>
+                    </div>
+                </h5>
+                <table>
+                    <tr class="table-head">
+                        <th>任务ID</th>
+                        <th>开始时间</th>
+                        <th>任务判断状态</th>
+                        <th>结束时间</th>
+                        <th>任务总文件数</th>
+                        <th>任务总文件大小</th>
+                    </tr>
+
+                    <tr th:if="${#request.getAttribute('exmissions')!=null && #request.getAttribute('exmissions').size()>0}" th:each="exmission : ${#request.getAttribute('exmissions')}">
+                        <td th:text="${exmission.missionid}"></td>
+                        <td th:text="${exmission.startTime}"></td>
+                        <td th:switch="${exmission.judgement}">
+                            <span th:case="auto_do">自动导出</span>
+                            <span th:case="wait_auth">待审批</span>
+                            <span th:case="ready_scan">待扫描</span>
+                            <span th:case="finished">完成</span>
+                            <span th:case="delete">驳回</span>
+                        </td>
+                        <td th:text="${exmission.endTime}"></td>
+                        <td th:text="${exmission.sumFileNumber}"></td>
+
+                        <td th:if="${exmission.sumfilesize < 1024}" th:utext="${exmission.sumfilesize}+' B'"></td>
+                        <td th:if="${exmission.sumfilesize / 1024 < 1024 &&exmission.sumfilesize > 1024}" th:utext="${exmission.sumfilesize / 1024+1}+' KB'"></td>
+                        <td th:if="${exmission.sumfilesize / 1024 /1024 < 1024 && exmission.sumfilesize/1024 > 1024}" th:utext="${exmission.sumfilesize / 1024 /1024 +1}+' MB'"></td>
+                        <td th:if="${exmission.sumfilesize / 1024 /1024/1024 < 1024 && exmission.sumfilesize/1024/1024 > 1024}" th:utext="${exmission.sumfilesize / 1024 /1024/1024 +1}+' GB'"></td>
+                    </tr>
+
+                    <tr th:if="${#request.getAttribute('exmissions').size() eq 0}">
+                        <td colspan="8">暂时没有任务数据</td>
+                    </tr>
+
+                </table>
+                <p class="txt_right mt_15"><a class="btn" href="./showmissiondeal?show=Export">进入日志详细</a></p>
+            </div>
+        </div>
+        <!--右 end-->
+    </div>
+</div>
+<!--主体 end-->
+
+
+<!--footer-->
+<div th:insert="~{footer.html}"></div>
+
+<!--footer end-->
+
+<script type="text/javascript" th:if="${#request.getAttribute('noright') eq 'noright'}">
+    var oldonload=window.onload;
+    window.onload=function(){
+        oldonload();
+        alert("你没有审批权限");
+    };
+</script>
+
+<script type="text/javascript" src="./static/introjs/intro.js"></script>
+<script type="text/javascript" src="./static/js/intro-home.js"></script>
+<script type="text/javascript">
+    $('#introbtn').click(function(){
+        showintro();
+    });
+</script>
+
+
+</body>
+</html>

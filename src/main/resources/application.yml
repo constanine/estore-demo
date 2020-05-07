@@ -1,0 +1,86 @@
+# 简单的 logback 配置, 更精确的配置建议使用 logback-spring.xml 配置文件
+logging:
+    pattern:
+        console: "%d{HH:mm:ss.SSS} %5p [%thread] %33.33logger{32}: %m - %X{SQL_EXECUTOR}%n"
+    level:
+        root: info
+        org.springframework.jdbc.core.JdbcTemplate: debug
+        com.bokesoft.dao.AuthorizeMissionDao: debug
+
+server:
+  port: ${SERVER_PORT:8090}
+  servlet:
+      context-path: ${SERVER_CONTEXT:/	}
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${DB_SERVER:localhost:3306/fileexchange}?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: ${DB_USER:root}
+    password: ${DB_PASS:****}
+  thymeleaf:
+    encoding: utf-8
+    prefix: classpath:/templates/
+    suffix: .html
+  mvc:
+    static-path-pattern: /static/**
+  servlet:
+    multipart:
+      max-file-size: ${MAX_FILE_SIZE:512MB}
+      max-request-size: ${MAX-REQUEST-SIZE:512MB}
+
+fileex:
+  cfg:
+    #内网传输至外网文件审核者
+    supervisors: ${SUPERVISORS:jzh,zzj,xialj,admin,gusm}
+
+    #内网文件目录（该目录下再根据用户名建立子目录，分别存放每个用户的文件）
+    inner_net_disk_path: ${INNER_NET_DISK_PATH:D:/3_routes/内网/yigodev-2-out} #inDir
+
+    #内网盘的ip地址
+    inner_net_disk_ip: ${INNER_NET_DISK_IP:ftp://192.168.1.10}   #inDirIP
+    
+    #内网请求地址
+    inner_net_ip: ${INNER_NET_IP:192.168.1.11,fileserver,localhost}
+
+       #外网文件目录（该目录下再根据用户名建立子目录，分别存放每个用户的文件）
+    outter_net_disk_path: ${OUTTER_NET_DISK_PATH:D:/3_routes/外网/out-2-yigodev}  #outDir
+
+    #外网盘的ip地址
+    outter_net_disk_ip: ${OUTTER_NET_DISK_IP:ftp://1.1.1.201} 
+    
+    #外网请求地址
+    outter_net_ip: ${OUTTER_NET_IP:1.1.12.11}
+
+       #内网传输至外网文件中间目录（该目录下再根据用户名建立子目录，分别存放每个用户的文件）
+    transfer_disk_path: ${TRANSFER_DISK_PATH:D:/3_routes/sys-files-bak}
+
+       #传输任务信息目录（该目录下再根据任务号分割算法建立多级子目录，在叶子目录中存放：该任务包含文件名列表文件、任务运行日志文件）
+    task_data_disk: ${TASK_DATA_DISK:D:/3_routes/sys-logs}
+
+       #内网传输至外网文件历史备份目录（该目录下再根据任务号分割算法建立子目录，在叶子目录中存放每个任务包含的文件）
+    history_data_disk: ${HISTORY_DATA_DISK:D:/3_routes/sys-logs}
+
+       #是否使用AD
+    use_ldap: ${USE_LDAP:false}
+    
+    #AD服务器地址
+    adAddress: ${AD_SERVER:192.168.1.1}
+    
+    no_auth_url_list:
+        - /login
+        - /dologin
+        - /scanmission
+        - /toexportstep2
+        - static/css/*
+        - static/images/*
+
+
+
+
+
+
+
+
+
+
+

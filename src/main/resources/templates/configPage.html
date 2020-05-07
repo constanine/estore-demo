@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="./static/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="./static/introjs/introjs.css" rel="stylesheet" type="text/css" />
+    <link href="./static/css/fileExchange.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./static/js/t3js.js"></script>
+    <script type="text/javascript" src="./static/js/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!--header-->
+<div th:insert="~{header.html}"></div>
+
+<!--header end-->
+
+<!--主体-->
+<div class="container" id="midContent">
+    <div class="row clearfix">
+        <!--左-->
+        <div th:insert="~{leftmenu.html}"></div>
+
+        <!--左 end-->
+
+        <!--右-->
+        <div class="span9 fl_right contentRight">
+            <div class="breadcrumb"><p>当前位置：<a href="./authority">首页</a>&gt;<span>传输配置</span></p><div class="ctrls-btn"><input type="button" class="btn" id='introbtn' value="使用引导" /></div></div><!--面包屑-->
+            <h1><span>传输配置</span></h1>
+
+            <div class="block-item" id="content">
+                <form action="./updateconfig" method="post">
+                    <table>
+                        <tr class="table-head">
+                            <th width="200px">属性名称</th>
+                            <th>属性值</th>
+                        </tr>
+                        <tr>
+                            <td> 复制到内网</td>
+                            <td><a id="innerurl" th:href="@{${#request.getAttribute('configmap')['o2ISourceDir']}}" target="_blank"><span th:text="@{${#request.getAttribute('configmap')['o2ISourceDir']}}"></span></a> &gt;&gt; <a id="outerurl" th:href="@{${#request.getAttribute('configmap')['o2IDestDir']}}" target="_blank"><span th:text="@{${#request.getAttribute('configmap')['o2IDestDir']}}"></span></a></td>
+
+                        </tr>
+                        <tr>
+                            <td>复制到外网</td>
+                            <td><a th:href="@{${#request.getAttribute('configmap')['i2OSourceDir']}}" target="_blank"><span th:text="@{${#request.getAttribute('configmap')['i2OSourceDir']}}"></span></a> &gt;&gt; <a th:href="@{${#request.getAttribute('configmap')['i2ODestDir']}}" target="_blank"><span th:text="@{${#request.getAttribute('configmap')['i2ODestDir']}}"></span></a></td>
+                        </tr>
+
+                        <tr th:if="${#session.getAttribute('isauthorizer') eq 'true'}">
+                            <td>中转区</td>
+                            <td th:text="${#request.getAttribute('configmap')['transferDisk']}"></td>
+                        </tr>
+                        <tr th:if="${#session.getAttribute('isauthorizer') eq 'true'}">
+                            <td>日志区</td>
+                            <td th:text="${#request.getAttribute('taskDisk')}"></td>
+                        </tr>
+
+                    </table>
+                </form>
+            </div>
+        </div>
+        <!--右 end-->
+    </div>
+</div>
+<!--主体 end-->
+
+<!--footer-->
+<div th:insert="~{footer.html}"></div>
+
+<!--footer end-->
+<script type="text/javascript" src="./static/introjs/intro.js"></script>
+<script type="text/javascript" src="./static/js/intro-config.js"></script>
+<script type="text/javascript">
+    $('#introbtn').click(function(){
+        showintro();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>authorizedpage</title>
+    <link href="./static/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="./static/css/fileExchange.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./static/js/t3js.js"></script>
+</head>
+<body>
+<!--header-->
+<div th:insert="~{header.html}"></div>
+<!--header end-->
+
+<!--主体-->
+<div class="container" id="midContent">
+    <div class="row clearfix">
+        <!--左-->
+        <div th:insert="~{leftmenu.html}"></div>
+
+        <!--左 end-->
+
+        <!--右-->
+        <div class="span9 fl_right contentRight">
+            <div class="breadcrumb"><p>当前位置：<a href="./authority">首页</a>&gt;<span>审批</span></p></div><!--当前位置待处理-->
+            <div class="ctrls-btn"><a id="btn" class="refresh" href="./toauthorizepage">刷新</a></div>
+            <h1><span>审批</span></h1>
+
+                <div class="block-item" id="missioncontent">
+                    <table>
+                        <tr class="table-head">
+                            <th>任务ID</th>
+                            <th>任务提交者</th>
+                            <th>任务传输开始时间1</th>
+                            <th>导入进中转区filelistlog-文件存放路径</th>
+                            <th>任务中文件总数</th>
+                            <th>任务中文件总大小</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr th:if="${#request.getAttribute('error') eq 'sqlerror'}">
+                            <td colspan="7">sql can't be connected</td>
+                        </tr>
+
+                        <tr th:if="${#request.getAttribute('missions')!=null && #request.getAttribute('missions').size()>0}" th:each="mission:${#request.getAttribute('missions')}">
+                            <td th:text="${mission.missionid}"></td>
+                            <td th:text="${mission.userCode}"></td>
+                            <td th:text="${mission.startTime}"></td>
+                            <td><a th:href="@{'logread?type=filelist&filename='+${mission.exportfilelogUrl}}" th:text="${mission.exportfilelogUrl}"></a></td>
+                            <td th:text="${mission.sumFileNumber}"></td>
+                            <td th:text="${mission.sumFileNumber}"></td>
+                            <td><a class="btn btn-primary" th:href="@{'authorizemission?result=yes&missionid='+${mission.missionid}}">通过</a>
+                                <a class="btn" th:href="@{'authorizemission?result=no&missionid='+${mission.missionid}}">驳回</a></td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+        <!--右 end-->
+    </div>
+</div>
+<!--主体 end-->
+
+<!--footer-->
+<div th:insert="~{footer.html}"></div>
+
+<!--footer end-->
+</body>
+</html>

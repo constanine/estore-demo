@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<span>本次执行的结果</span><br />
+<div th:switch="${#request.getAttribute('error') eq 'sqlerror'}">
+    <div th:case="true">sql can't be connected</div>
+    <div th:case="false">
+        <div id="missioncontent">
+            任务ID --任务判断状态--任务审批状态<br />
+            <div th:if="${#request.getAttribute('missions') !=null}">
+                <div th:each="mission:${#request.getAttribute('missions')}">
+                    <div th:text="${mission.missionid}"></div>
+                    <div th:switch="${mission.judgement}">
+                        <div th:case="auto_do">自动导出</div>
+                        <div th:case="wait_auth">待审批</div>
+                    </div>
+                    <div th:text="${mission.authorizeState}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

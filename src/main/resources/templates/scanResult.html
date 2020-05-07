@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Scan Result</title>
+</head>
+<body>
+<span>本次扫描的结果</span>
+<br/>
+
+        <div th:switch="${#request.getAttribute('error') eq 'sqlerror'}">
+            <span th:case="true">sql can't be connected</span>
+            <span th:case="false">
+                <br/>
+                <span th:if="${#request.getAttribute('missions')!=null}">
+                    <span th:each="mission:${#request.getAttribute('missions')}">
+                        <span th:text="${mission.missionid}" th:switch="${mission.judgement}">
+                            <span th:case="auto_do"><span>自动导出</span></span>
+                            <span th:case="wait_auth"><span>待审批</span></span>
+                        </span>
+                        <br/>
+                    </span>
+                </span>
+
+            </span>
+        </div>
+</body>
+</html>

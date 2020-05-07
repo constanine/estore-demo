@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Readymission</title>
+    <link href="./static/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="./static/css/fileExchange.css" rel="stylesheet" type="text/css" />
+    <link href="./static/introjs/introjs.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./static/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="./static/js/t3js.js"></script>
+    <script type="text/javascript" src="./static/js/pagination.js"></script>
+</head>
+<body>
+<!--header-->
+<div th:insert="~{header.html}"></div>
+<!--header end-->
+
+<!--主体-->
+<div class="container" id="midContent">
+    <div class="row clearfix">
+        <!--左-->
+        <div th:insert="~{leftmenu.html}"></div>
+
+        <!--左 end-->
+        <!--右-->
+        <div class="span9 fl_right contentRight">
+            <div class="breadcrumb">
+                <p>当前位置：<a href="./authority">首页</a>&gt;<span>导入</span></p>
+                <div class="ctrls-btn"><input type="button" class="btn" id='introbtn' value="使用引导" /></div>
+            </div><!--面包屑-->
+            <h1><span>导入</span></h1>
+
+            <div class="block-item">
+                <h5><span>导入的文件</span></h5>
+                  <form action="./exectuemission" method="post" name="imp" class="clearfix">
+                    <table id="importfilelist" th:if="${#request.getAttribute('cannotExecute') eq 'false'}" th:switch="${#request.getAttribute('fileStateList')!=null && #request.getAttribute('fileStateList').size()>0}">
+                        <tr class="table-head">
+                            <th>文件名</th>
+                            <th style="width:100px">大小</th>
+                            <th style="width:100px">类型</th>
+                            <th>路径</th>
+                        </tr>
+
+                        <input type="hidden" id="showpages"  th:value="${#request.getAttribute('pages')}" />
+
+                        <tbody th:case="true" th:each="j:${#numbers.sequence(0,#request.getAttribute('pages'))}">
+                        <tr th:each="i:${#numbers.sequence(j*10,j*10+10<#request.getAttribute('size')?j*10+10:#request.getAttribute('size')-1)}">
+
+                            <td th:text="${#request.getAttribute('fileStateList').get(i).filename}"></td>
+
+                            <td th:index="${i}" th:if="${#request.getAttribute('fileStateList').get(i).type eq 'file'}">
+                                <span th:if="${#request.getAttribute('fileStateList').get(i).size < 1024}" th:utext="${#request.getAttribute('fileStateList').get(i).size}+' B'">
+                                </span>
+                                <span th:if="${#request.getAttribute('fileStateList').get(i).size / 1024 < 1024 && #request.getAttribute('fileStateList').get(i).size > 1024}" th:utext="${#request.getAttribute('fileStateList').get(i).size / 1024+1}+' KB'">
+                                </span>
+                                <span th:if="${#request.getAttribute('fileStateList').get(i).size / 1024 /1024 < 1024 && #request.getAttribute('fileStateList').get(i).size/1024 > 1024}" th:utext="${#request.getAttribute('fileStateList').get(i).size / 1024 /1024 +1}+' MB'">
+                                </span>
+                                <span th:if="${#request.getAttribute('fileStateList').get(i).size / 1024 /1024/1024 < 1024 && #request.getAttribute('fileStateList').get(i).size/1024/1024 > 1024}" th:utext="${#request.getAttribute('fileStateList').get(i).size / 1024 /1024/1024 +1}+' B'">
+                                </span>
+                            </td>
+                            <td th:if="${#request.getAttribute('fileStateList').get(i).type eq 'folder'}">
+                                <span>-</span>
+                            </td>
+
+                            <td th:switch="${#request.getAttribute('fileStateList').get(i).type}">
+                                <span th:case="folder">文件夹</span>
+                                <span th:case="file">文件</span>
+                            </td>
+
+                            <td th:text="${#request.getAttribute('fileStateList').get(i).path}"></td>
+                        </tr>
+                        </tbody>
+
+
+                        <tr th:case="false"><td colspan="4" style="font-size: 36">当前资源文件没有执行的文件,请返回主页</td></tr>
+
+                    </table>
+
+                    <div id="pageline" class="pageline"></div>
+                    <div class="mt_10 mb_10" th:if="${#request.getAttribute('cannotExecute') eq 'false'}">
+                        <p>文件总数：<span th:utext="${#request.getAttribute('size')}"></span></p>
+                        <p>文件总大小：
+                            <span th:if="${#session.getAttribute('sumfilesize') < 1024}"><span th:utext="${#session.getAttribute('sumfilesize')}+' B'"></span></span>
+                            <span th:if="${#session.getAttribute('sumfilesize')/1024 < 1024 && #session.getAttribute('sumfilesize') > 1024}"><span th:utext="${#session.getAttribute('sumfilesize')/1024+1}+' KB'"></span></span>
+                            <span th:if="${#session.getAttribute('sumfilesize')/1024/1024 < 1024 && #session.getAttribute('sumfilesize')/1024 > 1024}"><span th:utext="${#session.getAttribute('sumfilesize')/1024/1024+1}+' MB'"></span></span>
+                            <span th:if="${#session.getAttribute('sumfilesize')/1024/1024/1024 < 1024 && #session.getAttribute('sumfilesize')/1024/1024 > 1024}"><span th:utext="${#session.getAttribute('sumfilesize')/1024/1024/1024+1}+' GB'"></span></span>
+                        </p>
+
+                    </div>
+
+                    <div id="excute_div" th:switch="${#request.getAttribute('cannotExecute') eq 'true'}">
+
+                        <p th:case="true">
+                            <tr>导入任务执行中,Missionid: <span th:text="${#session.getAttribute('missionid')}"></span></tr><br>
+                            <tr><a href="./checkmissionprogress?missionType=Import">查看当前任务</a></tr>
+                        </p>
+
+                        <p th:case="false">
+                            <input class="btn btn-primary" th:if="${#request.getAttribute('size') == 0}" type="submit" value="确认执行" onclick="return checkmission();" disabled="true"  />
+                            <input class="btn btn-primary" th:if="${#request.getAttribute('size') != 0}" onclick="return checkmission();" type="submit" value="确认执行" />
+                            <!--<input class="btn btn-primary" onclick="uploadFile()" type="button" value="文件上传" />-->
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!--右 end-->
+    </div>
+</div>
+<!--主体 end-->
+
+<!--footer-->
+<div th:insert="~{footer.html}"></div>
+
+<!--footer end-->
+
+<script type="text/template" id="uploadTemplate">
+    <div id="fileuploaddialog">
+        <form action="./fileUpload/import" enctype="multipart/form-data" method="post">
+            <p>选择文件: <input class="btn btn-primary" type="file" name="fileName"/></p>
+            <p>
+                <input class="btn btn-primary" type="submit" value="提交" />
+            </p>
+        </form>
+    </div>
+</script>
+<!-- onload.js -->
+<script type="text/javascript" src="./static/introjs/intro.js"></script>
+<script type="text/javascript" src="./static/js/intro-import.js"></script>
+<script type="text/javascript" >
+    $(function(){
+        pages = $("#showpages").val();
+        pages = pages>0 ? pages : 1 ;
+        pageinit(pages,10,"importfilelist","import_file_tbody","pageline");
+        setpage();
+    });
+    $('#introbtn').click(function(){
+        showintro();
+    });
+
+    //文件上传
+    function uploadFile() {
+        $(document.body).append($("#uploadTemplate").html());
+    }
+
+</script>
+<!-- onload.js -->
+</body>
+</html>

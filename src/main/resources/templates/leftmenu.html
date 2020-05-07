@@ -1,0 +1,47 @@
+<div class="span3 fl_left asideLeft">
+    <div class="tree">
+        <h2 class="treeHead"><a href="./authority"><span>系统首页</span></a></h2>
+        <ul>
+            <li><a href="./showconfig">配置信息</a></li>
+            <li th:if="${#session.getAttribute('netEnv') eq 'inner'}"><a href="./seraching?towhich=Import">复制到内网</a></li>
+            <li th:if="${#session.getAttribute('netEnv') eq 'inner'}"><a href="./seraching?towhich=Export">复制到外网</a> </li>
+            <li><a href="./indicateinfo">使用说明</a> </li>
+            <li th:if="${#session.getAttribute('isauthorizer') eq 'true' and #session.getAttribute('netEnv') eq 'inner'}"><a href="./toauthorizepage">审批</a></li>
+            <li><a href="./filedownloadlist">下载</a></li>
+        </ul>
+    </div>
+    <!--最近消息-->
+
+    <div th:if="${#request.getAttribute('error') eq 'sqlerror'}">
+        <span>sql can't be connected</span>
+    </div>
+
+    <div class="new-message" id="messagecontent">
+        <h5><span>最近消息</span></h5>
+
+        <ul th:switch="${#request.getAttribute('messages')!=null}">
+
+            <li th:case="true" th:each="message:${#request.getAttribute('messages')}">
+                <p class="message-title" title="${message.missionid}"><a href="#" th:text="${message.missionid}"></a></p>
+                <p class="message-state" th:switch="${message.missionState}">
+                    <span th:case="finished">任务状态:完成</span> <span th:case="finished" th:text="${message.messageState}">消息状态:</span>
+                    <span th:case="error">任务状态:错误</span> <span th:case="error" th:text="${message.messageState}">消息状态:</span>
+                    <span th:case="stopped">任务状态:取消</span> <span th:case="stopped" th:text="${message.messageState}">消息状态:</span>
+                    <span th:case="step1finished">任务状态:导出至中转区完成</span> <span th:case="step1finished" th:text="${message.messageState}">消息状态:</span>
+                    <span th:case="step1error">任务状态:导出至中转区错误</span> <span th:case="step1error" th:text="${message.messageState}">消息状态:</span>
+                    <span th:case="step1stopped">任务状态:取消</span> <span th:case="step1stopped" th:text="${message.messageState}">消息状态:</span>
+                    <span th:case="step2error">任务状态:导出错误</span> <span th:case="step2error" th:text="${message.messageState}">消息状态:</span>
+                    <span th:case="step2finished">任务状态:导出完成</span> <span th:case="step2finished" th:text="${message.messageState}">消息状态:</span>
+                </p>
+                <p class="message-time"><span th:text="${message.reportTime}"></span></p>
+            </li>
+
+            <li th:case="false">
+                    <span>
+                    <p>暂时没有消息</p>
+                    </span>
+            </li>
+
+        </ul>
+    </div>
+</div>

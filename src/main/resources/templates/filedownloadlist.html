@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="./static/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="./static/css/fileExchange.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./static/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="./static/js/t3js.js"></script>
+    <script type="text/javascript" src="./static/js/paginationforsql.js"></script>
+</head>
+<body>
+<!--header-->
+<div th:insert="~{header.html}"></div>
+<!--header end-->
+
+<!--主体-->
+<div class="container" id="midContent">
+    <div class="row clearfix">
+
+<!--左-->
+<div th:insert="~{leftmenu.html}"></div>
+
+<!--左 end-->
+
+<!--右-->
+<!--右-->
+<div class="span9 fl_right contentRight">
+    <div class="breadcrumb"><p>当前位置：<a href="./authority">首页</a>&gt;<span>文件下载</span></p></div><!--面包屑-->
+    <div class="block-item">
+        <table th:if="${#session.getAttribute('netEnv') eq 'inner'}">
+            <h1><span>下载-来自外网</span></h1>
+            <tr class="table-head">
+                <th  style="width: 80%">文件名</th>
+                <th>点击下载/删除</th>
+            </tr>
+
+                <tr th:each="file,fileStat:${#request.getAttribute('destImportFlies')}">
+                    <td th:text="${file.name}" style="width: 80%"></td>
+                    <td>
+                        <input th:value="${file.path}" type="hidden" class="filepathVal">
+                        <input class="btn btn-primary indownbtn"  type="submit" value="文件下载"/>
+                        <input class="btn btn-primary indelbtn"  type="submit" value="删除"/>
+                    </td>
+                </tr>
+        </table>
+
+        <table th:if="${#session.getAttribute('netEnv') eq 'outter'}">
+            <h1><span>下载-来自内网</span></h1>
+            <tr class="table-head">
+                <th style="width: 80%">文件名</th>
+                <th>点击下载/删除</th>
+            </tr>
+
+            <tr th:each="file,fileStat:${#request.getAttribute('destExportFiles')}">
+                <td th:text="${file.name}"  style="width: 80%"></td>
+                <td>
+                    <input th:value="${file.path}" type="hidden" class="filepathVal">
+                    <input class="btn btn-primary outdownbtn" type="submit" value="文件下载"/>
+                    <input class="btn btn-primary outdelbtn"  type="submit" value="删除"/>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+    </div>
+</div>
+<!--右 end-->
+
+<!--footer-->
+<div th:insert="~{footer.html}"></div>
+
+<!--footer end-->
+
+<script type="text/javascript">
+    /*文件下载*/
+    $(".indownbtn").click(function(){
+        var filepath = encodeURIComponent($(".filepathVal",$(this).parent()).val());
+        var url = "./filedownload?path="+filepath;
+        window.open(url);
+    });
+    $(".outdownbtn").click(function(){
+        var filepath = encodeURIComponent($(".filepathVal",$(this).parent()).val());
+        var url = "./filedownload?path="+filepath;
+        window.open(url);
+    });
+    
+    /*文件删除*/
+    $(".indelbtn").click(function () {
+        var filepath = encodeURIComponent($(".filepathVal",$(this).parent()).val());
+        var url = "./filedelete?path="+filepath;
+        window.open(url);
+    })
+    
+    $(".outdelbtn").click(function () {
+        var filepath = encodeURIComponent($(".filepathVal",$(this).parent()).val());
+        var url = "./filedelete?path="+filepath;
+        window.open(url);
+    })
+</script>
+
+</body>
+</html>
