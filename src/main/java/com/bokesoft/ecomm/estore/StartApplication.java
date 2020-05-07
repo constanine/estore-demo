@@ -1,26 +1,18 @@
-package com.bokesoft;
+package com.bokesoft.ecomm.estore;
 
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@Controller
+@ComponentScan
 public class StartApplication {
     private static ApplicationContext applicationContext;
     public static void main(String[] args) {
          applicationContext = SpringApplication.run(StartApplication.class, args);
-    }
-
-    @RequestMapping("/")
-    public String login(HttpServletRequest request) {
-    	return "redirect:/authority";
     }
 
     public static <T> T getBean (Class<T> clazz) {

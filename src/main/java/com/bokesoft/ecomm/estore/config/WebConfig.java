@@ -1,4 +1,4 @@
-package com.bokesoft.config;
+package com.bokesoft.ecomm.estore.config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.bokesoft.filter.SessionFilter;
+import com.bokesoft.ecomm.estore.web.filter.SessionFilter;
 
 /*
  * @author:gushiming
@@ -21,8 +21,6 @@ import com.bokesoft.filter.SessionFilter;
 
 @Configuration
 public class WebConfig {
-	@Autowired
-	private ApplicationConfiguer config;
     @Bean
     public FilterRegistrationBean<SessionFilter> filterRegistrationBean(){
 
@@ -34,11 +32,7 @@ public class WebConfig {
         List<String> urls = new ArrayList<>();
         urls.add("/*");
         registrationBean.setUrlPatterns(urls);
-        
-        //设置初始过滤器所需要的参数，可以在init()方法中获取数据
-        Map<String, String> map = new HashMap<String, String>();
-        map.put(SessionFilter.ATTR_NO_AUTHED_URLS,StringUtils.join(config.getNo_auth_url_list(),","));
-        registrationBean.setInitParameters(map);
+
         return registrationBean;
     }
 
