@@ -1,13 +1,14 @@
 package com.bokesoft.ecomm.estore.mid.connection.dbmanager;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.bokesoft.ecomm.estore.mid.connection.struc.DBType;
 import com.bokesoft.ecomm.estore.mid.connection.struc.PrepareSQL;
 
 public class SqlserverDBManager extends GeneralDBManager {
 
-	public SqlserverDBManager(Connection connection) {
+	public SqlserverDBManager(Connection connection) throws SQLException {
 		super(connection);
 	}
 

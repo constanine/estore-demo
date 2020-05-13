@@ -1,6 +1,7 @@
 package com.bokesoft.ecomm.estore.mid.connection.dbmanager;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class OracleDBManager extends GeneralDBManager {
 			"WHERE", "WITH", "LONG", "NUMBER", "INTEGER" };
 	private Set<String> keySet = null;
 
-	public OracleDBManager(Connection connection) {
+	public OracleDBManager(Connection connection) throws SQLException {
 		super(connection);
 	}
 

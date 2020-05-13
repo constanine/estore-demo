@@ -19,7 +19,6 @@ import org.apache.log4j.Logger;
 import com.bokesoft.ecomm.estore.mid.connection.args.struc.ListQueryArguments;
 import com.bokesoft.ecomm.estore.mid.connection.args.struc.NormalQueryArguments;
 import com.bokesoft.ecomm.estore.mid.connection.args.struc.PSArgs;
-import com.bokesoft.ecomm.estore.mid.connection.args.struc.PsPara;
 import com.bokesoft.ecomm.estore.mid.connection.args.struc.QueryArguments;
 import com.bokesoft.ecomm.estore.mid.connection.struc.DataType;
 import com.bokesoft.ecomm.estore.mid.connection.struc.PageResult;
@@ -31,8 +30,9 @@ public abstract class GeneralDBManager implements IDBManager {
 	private Logger logger = Logger.getLogger(this.getClass());
 	protected Connection connection = null;
 
-	public GeneralDBManager(Connection connection) {
+	public GeneralDBManager(Connection connection) throws SQLException {
 		this.connection = connection;
+		connection.setAutoCommit(false);
 	}
 
 	@Override
@@ -259,11 +259,12 @@ public abstract class GeneralDBManager implements IDBManager {
 	@Override
 	public PageResult execPageQueryByRowIdx(String sql, String orderBy, int start, int end) throws Throwable {
 		PrepareSQL prepareSQL = getLimitString(sql, orderBy, start > 0 ? true : false, start, end);
-		List<Map<String, Object>> data = _execPrepareQuery(prepareSQL.getSQL(), new NormalQueryArguments(prepareSQL.getPrepareValues().toArray()));
+		List<Map<String, Object>> data = _execPrepareQuery(prepareSQL.getSQL(),
+				new NormalQueryArguments(prepareSQL.getPrepareValues().toArray()));
 		PageResult result = new PageResult();
 		result.setData(data);
-		result.setPageSize(start-end);
-		result.setPageNo(end/(start-end));
+		result.setPageSize(start - end);
+		result.setPageNo(end / (start - end));
 		return result;
 	}
 
@@ -335,6 +336,7 @@ public abstract class GeneralDBManager implements IDBManager {
 		}
 	}
 
+	@Override
 	public int executeUpdate(PreparedStatement preparedStatement, String sql, QueryArguments psArgs) throws Throwable {
 		int result = 0;
 		try {
@@ -419,13 +421,34 @@ public abstract class GeneralDBManager implements IDBManager {
 					((value == null) ? null : Integer.valueOf(((Boolean) value).booleanValue() ? 1 : 0)).intValue());
 			return;
 		}
-		throw new RuntimeException("参数格式不匹配");
+		throw new RuntimeException("鍙傛暟鏍煎紡涓嶅尮閰�");
 
 	}
 
-	@Override
 	public void setRowLock(String tableKey, String columnKey, Long OID) throws Throwable {
-		// TODO Auto-generated method stub
+		String sql = "update " + keyWordEscape(tableKey) + " set Slock=1 where " + keyWordEscape(columnKey) + "=?";
+		PSArgs pSArgs = new PSArgs();
+		pSArgs.addLongArg(OID);
+		setRowLock(sql, (QueryArguments) pSArgs);
+	}
 
+	public void setRowLock(String tableKey, String columnKey, QueryArguments queryArguments) throws Throwable {
+		String sql = "update " + keyWordEscape(tableKey) + " set Slock=1 where " + columnKey;
+		setRowLock(sql, queryArguments);
+	}
+
+	protected void setRowLock(String sql, QueryArguments queryArguments) throws Throwable {
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = this.connection.prepareStatement(sql);
+			executeUpdate(preparedStatement, sql, queryArguments);
+			logger.info("execute sql:" + sql + ",args:" + queryArguments);
+		} catch (Throwable throwable) {
+			logger.error("execute sql:" + sql + ",args:" + queryArguments + " error", throwable);
+			throw throwable;
+		} finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+		}
 	}
 }

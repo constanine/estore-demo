@@ -8,7 +8,7 @@ import java.util.List;
 public class PSArgs implements QueryArguments {
 	private List<Integer> types = new ArrayList<>();
 
-	private List<Object> arguments = new ArrayList();
+	private List<Object> arguments = new ArrayList<Object>();
 
 	public void addArg(Integer paramInteger, Object paramObject) {
 		this.types.add(paramInteger);

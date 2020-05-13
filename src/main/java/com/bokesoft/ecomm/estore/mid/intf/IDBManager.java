@@ -50,12 +50,10 @@ public interface IDBManager {
 	 */
 	public HashSet<String> getTableColumnSet(String tableKey) throws Throwable;
 
-
 	/**
 	 * 数据库的保留关键字的转义处理
 	 * 
-	 * @param key
-	 *            表名或者字段名等
+	 * @param key 表名或者字段名等
 	 * @return 处理过的数据库可以识别的字符串
 	 */
 	public String keyWordEscape(String key);
@@ -71,8 +69,8 @@ public interface IDBManager {
 	/**
 	 * 获取当前时间
 	 * 
-	 * @return 当前时间，类型为long，即从1970-01-01 00:00:01到该时间的毫秒数 可使用java.util.Date dt =
-	 *         new Date(longtime)将long类型转换为date类型
+	 * @return 当前时间，类型为long，即从1970-01-01 00:00:01到该时间的毫秒数 可使用java.util.Date dt = new
+	 *         Date(longtime)将long类型转换为date类型
 	 * @throws Throwable 处理异常
 	 */
 	public long getCurTime() throws Throwable;
@@ -88,34 +86,33 @@ public interface IDBManager {
 	/**
 	 * 使用PrepareStatement查询数据
 	 * 
-	 * @param sql
-	 *            原始sql语句，其中参数中的变量以?表示
-	 * @param arguments
-	 *            用于替换?的参数列表
+	 * @param sql       原始sql语句，其中参数中的变量以?表示
+	 * @param arguments 用于替换?的参数列表
 	 * @return 数据集合
 	 * @throws Throwable 处理异常
 	 */
-	public List<Map<String,Object>> execPrepareQuery(String sql, Object... arguments) throws Throwable;
+	public List<Map<String, Object>> execPrepareQuery(String sql, Object... arguments) throws Throwable;
 
-	public List<Map<String,Object>> execPrepareQuery(String sql, List<Object> arguments) throws Throwable;
+	public List<Map<String, Object>> execPrepareQuery(String sql, List<Object> arguments) throws Throwable;
 
-	public List<Map<String,Object>> execPrepareQuery(String sql, List<Integer> types, List<Object> arguments) throws Throwable;
+	public List<Map<String, Object>> execPrepareQuery(String sql, List<Integer> types, List<Object> arguments)
+			throws Throwable;
 
-	public List<Map<String,Object>> execQuery(String sql) throws Throwable;
-	
-	public PageResult execPageQueryByRowIdx(String sql,String orderBy,int start,int end) throws Throwable;
-	
-	public PageResult execPageQueryByPageSize(String sql,String orderBy,int pageSize,int pageNo) throws Throwable;
+	public List<Map<String, Object>> execQuery(String sql) throws Throwable;
 
-	public ResultSet executeQuery(PreparedStatement preparedStatement, String str, QueryArguments pSArgs) throws Throwable;
+	public PageResult execPageQueryByRowIdx(String sql, String orderBy, int start, int end) throws Throwable;
+
+	public PageResult execPageQueryByPageSize(String sql, String orderBy, int pageSize, int pageNo) throws Throwable;
+
+	public ResultSet executeQuery(PreparedStatement preparedStatement, String str, QueryArguments pSArgs)
+			throws Throwable;
+
 	// 数据库辅助更新的方法
 	/**
 	 * 使用PrepareStatement更新数据
 	 * 
-	 * @param sql
-	 *            原始sql语句，其中参数中的变量以?表示
-	 * @param arguments
-	 *            用于替换?的参数列表
+	 * @param sql       原始sql语句，其中参数中的变量以?表示
+	 * @param arguments 用于替换?的参数列表
 	 * @return 影响的数据行数
 	 * @throws Throwable
 	 */
@@ -125,8 +122,9 @@ public interface IDBManager {
 
 	public int execPrepareUpdate(String sql, List<Integer> types, List<Object> arguments) throws Throwable;
 
-	public int execUpdate(String sql) throws Throwable;
+	public int executeUpdate(PreparedStatement ps, String insertSql, QueryArguments args) throws Throwable;
 
+	public int execUpdate(String sql) throws Throwable;
 
 	/**
 	 * 生成Statement对象,由具体的DBManager实现
@@ -144,21 +142,15 @@ public interface IDBManager {
 	 */
 	public PreparedStatement prepareStatement(String sql) throws SQLException;
 
-
 	/**
 	 * 返回查询限定的SQL语句
 	 * 
 	 * 
-	 * @param query
-	 *            查询语句
-	 * @param orderBy
-	 *            排序字段
-	 * @param hasOffset
-	 *            偏差标志
-	 * @param startRow
-	 *            查询的起始行
-	 * @param endRow
-	 *            查询的结束行
+	 * @param query     查询语句
+	 * @param orderBy   排序字段
+	 * @param hasOffset 偏差标志
+	 * @param startRow  查询的起始行
+	 * @param endRow    查询的结束行
 	 * @return PrepareSQL对象
 	 */
 	public PrepareSQL getLimitString(String query, String orderBy, boolean hasOffset, int startRow, int endRow);
@@ -187,18 +179,33 @@ public interface IDBManager {
 	/**
 	 * 为预处理语句赋值
 	 * 
-	 * @param ps
-	 *            预编译的执行语句
-	 * @param parameterIndex
-	 *            参数序号
-	 * @param value
-	 *            参数值
-	 * @param dataType
-	 *            数据类型
-	 * @throws SQLException 数据库异常
+	 * @param ps             预编译的执行语句
+	 * @param parameterIndex 参数序号
+	 * @param value          参数值
+	 * @param dataType       数据类型
+	 * @throws SQLException     数据库异常
 	 * @throws MidCoreException 中间层异常
 	 */
 	public void setParameter(PreparedStatement ps, int parameterIndex, Object value, int dataType) throws SQLException;
+
+	/**
+	 * 开启事务
+	 * 
+	 * @throws Throwable
+	 */
+	default public void begin() throws Throwable {
+	}
+
+	/**
+	 * 返回数据库主版本号
+	 * 
+	 * @return 数据库主版本号
+	 * @throws Throwable 处理异常
+	 */
+	public default int getMainVersion() throws Throwable {
+		return -1;
+	}
+
 
 	/**
 	 * 锁住数据库指定数据，条件为OID
@@ -211,17 +218,12 @@ public interface IDBManager {
 	public void setRowLock(String tableKey, String columnKey, Long OID) throws Throwable;
 
 	/**
-	 * 开启事务
-	 * @throws Throwable
-	 */
-	default public void begin()throws Throwable{}
-
-	/**
-	 * 返回数据库主版本号
-	 * @return 数据库主版本号
+	 * 根据条件和参数锁住数据库指定数据
+	 * 
+	 * @param tableKey 表标识
+	 * @param condition 条件
+	 * @param args 参数
 	 * @throws Throwable 处理异常
 	 */
-	public default int getMainVersion() throws Throwable {
-		return -1;
-	}	
+	public void setRowLock(String tableKey, String condition, QueryArguments args) throws Throwable;
 }

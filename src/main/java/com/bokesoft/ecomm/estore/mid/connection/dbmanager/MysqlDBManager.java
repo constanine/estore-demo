@@ -1,14 +1,14 @@
 package com.bokesoft.ecomm.estore.mid.connection.dbmanager;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.bokesoft.ecomm.estore.mid.connection.struc.DBType;
-import com.bokesoft.ecomm.estore.mid.connection.struc.PageResult;
 import com.bokesoft.ecomm.estore.mid.connection.struc.PrepareSQL;
 
 public class MysqlDBManager extends GeneralDBManager {
 
-	public MysqlDBManager(Connection connection) {
+	public MysqlDBManager(Connection connection) throws SQLException {
 		super(connection);
 	}
 
